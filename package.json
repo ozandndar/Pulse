@@ -1,0 +1,33 @@
+{
+  "name": "pulse",
+  "version": "1.0.0",
+  "description": "",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev:renderer\" \"npm run dev:main\"",
+    "dev:renderer": "npm run dev --prefix renderer",
+    "dev:main": "concurrently -k \"npm run watch:main\" \"npm run run:electron\"",
+    "watch:main": "tsc -w -p tsconfig.json",
+    "run:electron": "wait-on tcp:5173 && cross-env NODE_ENV=development electronmon --main ./dist/main/main.js",
+    "build:main": "tsc -p tsconfig.json",
+    "start:main": "npm run build:main && electron ./dist/main/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/electron": "^1.6.12",
+    "@types/node": "^24.6.2",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^38.2.1",
+    "electronmon": "^2.0.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "wait-on": "^9.0.1"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.0.4"
+  }
+}
