@@ -3,7 +3,9 @@ declare global {
     electronAPI?: {
       windowControl: (action: string) => void;
     };
-    api?: any; // future expanded typed API placeholder
+    systemAPI?: {
+      getStats: () => Promise<any>
+    }
   }
 }
 
