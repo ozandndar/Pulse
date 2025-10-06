@@ -5,7 +5,6 @@ const navItems = [
   { to: "/", label: "Dashboard", icon: HomeIcon },
   { to: "/system", label: "System", icon: CpuChipIcon },
   { to: "/app-usage", label: "App Usage", icon: ChartBarIcon },
-  { to: "/network", label: "Network", icon: WifiIcon },
   { to: "/focus", label: "Focus", icon: ClockIcon },
   { to: "/settings", label: "Settings", icon: Cog6ToothIcon },
 ];
