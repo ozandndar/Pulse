@@ -1,7 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
+  base: "./",
   plugins: [react()],
   css: {
     postcss: './postcss.config.js'
@@ -10,7 +12,11 @@ export default defineConfig({
     port: 5173,
   },
   build: {
-    outDir: "../dist/renderer",
+    outDir: "../build/renderer",
     emptyOutDir: true,
+    assetsDir: "assets",
+    rollupOptions: {
+      input: path.resolve(__dirname, "index.html"),
+    }
   },
 });

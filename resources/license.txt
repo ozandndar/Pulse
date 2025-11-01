@@ -1,0 +1,12 @@
+Pulse Desktop Application
+Copyright (c) 2025 Pulse
+
+By installing this software you agree to the following terms:
+
+1. This application is provided for internal monitoring and productivity tracking.
+2. Redistribution or resale without written permission is prohibited.
+3. This software is provided "as is" without warranties of any kind.
+4. Pulse and its contributors are not liable for any damages arising from use of this software.
+5. You acknowledge responsibility for complying with all applicable privacy and employee-notification laws when collecting usage data.
+
+Press Next to accept and continue with the installation.

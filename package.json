@@ -3,25 +3,33 @@
   "version": "1.0.0",
   "description": "",
   "type": "commonjs",
-  "main": "main.js",
+  "main": "build/main/main.js",
   "scripts": {
     "dev": "concurrently -k \"npm run dev:renderer\" \"npm run dev:main\"",
     "dev:renderer": "npm run dev --prefix renderer",
     "dev:main": "concurrently -k \"npm run watch:main\" \"npm run run:electron\"",
     "watch:main": "tsc -w -p tsconfig.json",
-    "run:electron": "wait-on tcp:5173 && cross-env NODE_ENV=development electronmon --main ./dist/main/main.js",
+    "run:electron": "wait-on tcp:5173 && cross-env NODE_ENV=development electronmon --main ./build/main/main.js",
     "build:main": "tsc -p tsconfig.json",
-    "start:main": "npm run build:main && electron ./dist/main/main.js"
+    "build:renderer": "npm --prefix renderer run build",
+    "build": "npm run clean && npm run build:main && npm run build:renderer",
+    "dist": "npm run build && electron-builder",
+    "start:prod": "npm run build && electron ./build/main/main.js",
+    "start:main": "npm run build:main && electron ./build/main/main.js",
+    "clean": "rimraf dist build release"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@electron-forge/plugin-base": "^7.10.2",
     "@types/electron": "^1.6.12",
     "@types/node": "^24.6.2",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "electron": "^38.2.1",
+    "electron-builder": "^26.0.12",
     "electronmon": "^2.0.3",
+    "rimraf": "^6.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vite": "^7.1.9",
@@ -29,6 +37,43 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^5.0.4",
+    "active-win": "^8.2.1",
+    "better-sqlite3": "^12.4.1",
+    "desktop-idle": "^1.3.0",
+    "recharts": "^3.2.1",
     "systeminformation": "^5.27.11"
+  },
+  "build": {
+    "appId": "com.pulse.desktop",
+    "productName": "Pulse",
+    "directories": {
+      "output": "dist",
+      "buildResources": "resources"
+    },
+    "files": [
+      "build/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Pulse",
+      "license": "resources/license.txt",
+      "artifactName": "${productName} Setup ${version}.${ext}"
+    }
   }
 }
