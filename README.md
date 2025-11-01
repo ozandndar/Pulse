@@ -4,6 +4,18 @@ A desktop system monitoring & productivity hub built with **Electron + React (Vi
 
 > Status: Early scaffolding. Core window chrome & layout established. Features below are aspirational unless marked as implemented.
 
+## Screenshots
+
+![Pulse Dashboard](assets/github/dashboard.png)
+
+|  |  |
+| --- | --- |
+| ![Daily Activity](assets/github/dashboard_daily_activity.png) | ![System Overview](assets/github/System.png) |
+| ![App Usage Overview](assets/github/app_usage1.png) | ![App Usage Detail](assets/github/app_usage2.png) |
+| ![Focus View](assets/github/focus1.png) | ![Focus Detail](assets/github/focus2_detail.png) |
+| ![Settings](assets/github/settings.png) |  |
+
+
 ## ✨ Features
 - Custom frameless window with draggable title bar & window controls
 - Modular sidebar navigation
