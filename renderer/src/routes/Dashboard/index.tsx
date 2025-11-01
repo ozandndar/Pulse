@@ -27,7 +27,7 @@ type TimelineTooltipItem = {
 const MAX_TOP_APPS = 4;
 const REFRESH_INTERVAL_MS = 15000;
 const AREA_COLORS = ["#38bdf8", "#a855f7", "#f97316", "#22c55e", "#94a3b8", "#facc15"];
-const THIRTY_MINUTES_MS = 30 * 60 * 1000;
+const HOUR_MS = 60 * 60 * 1000;
 
 function sanitizeSummary(data: unknown): UsageSummary[] {
     if (!Array.isArray(data)) return [];
@@ -74,29 +74,29 @@ function formatMinutes(minutes: number) {
 }
 
 function formatTimeLabel(date: Date) {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false });
 }
 
 function buildTimeline(entries: UsageEntry[], trackedApps: string[]) {
-    if (entries.length === 0) {
-        return { points: [] as TimelinePoint[], keys: [...trackedApps] };
-    }
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const startOfDayMs = startOfDay.getTime();
+    const endOfDayMs = startOfDayMs + 24 * HOUR_MS;
 
     const topSet = new Set(trackedApps);
     const buckets = new Map<number, TimelinePoint>();
     const totals = new Map<string, number>();
     let otherTotals = 0;
-    let minBucket: number | null = null;
-    let maxBucket: number | null = null;
 
     for (const entry of entries) {
         const parsed = new Date(entry.timestamp);
-        if (Number.isNaN(parsed.getTime())) continue;
+        const entryTime = parsed.getTime();
+        if (Number.isNaN(entryTime) || entryTime < startOfDayMs || entryTime >= endOfDayMs) {
+            continue;
+        }
 
-        const bucketDate = new Date(parsed);
-        const minutes = bucketDate.getMinutes();
-        const bucketMinutes = minutes < 30 ? 0 : 30;
-        bucketDate.setMinutes(bucketMinutes, 0, 0);
+        const bucketDate = new Date(entryTime);
+        bucketDate.setMinutes(0, 0, 0);
         const bucketKey = bucketDate.getTime();
         const label = formatTimeLabel(bucketDate);
 
@@ -120,17 +120,6 @@ function buildTimeline(entries: UsageEntry[], trackedApps: string[]) {
         if (targetApp === "Other") {
             otherTotals += minutesSpent;
         }
-
-        if (minBucket === null || bucketKey < minBucket) {
-            minBucket = bucketKey;
-        }
-        if (maxBucket === null || bucketKey > maxBucket) {
-            maxBucket = bucketKey;
-        }
-    }
-
-    if (minBucket === null || maxBucket === null) {
-        return { points: [] as TimelinePoint[], keys: [...trackedApps] };
     }
 
     let keys: string[];
@@ -145,8 +134,9 @@ function buildTimeline(entries: UsageEntry[], trackedApps: string[]) {
         }
     }
 
+    // Pre-fill the timeline so the chart always spans 00:00 through 23:00 for today.
     const points: TimelinePoint[] = [];
-    for (let bucket = minBucket; bucket <= maxBucket; bucket += THIRTY_MINUTES_MS) {
+    for (let bucket = startOfDayMs; bucket < endOfDayMs; bucket += HOUR_MS) {
         const existing = buckets.get(bucket);
         const bucketDate = new Date(bucket);
         const label = formatTimeLabel(bucketDate);
@@ -411,7 +401,15 @@ export default function Dashboard() {
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={timelinePoints} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                                     <CartesianGrid stroke="#1f2937" strokeDasharray="3 3" />
-                                    <XAxis dataKey="time" stroke="#9ca3af" tickLine={false} axisLine={false} interval={0} />
+                                    <XAxis
+                                        dataKey="time"
+                                        stroke="#9ca3af"
+                                        tickLine={false}
+                                        axisLine={false}
+                                        interval={1}
+                                        tick={{ fontSize: 11, fill: "#9ca3af" }}
+                                        tickMargin={10}
+                                    />
                                     <YAxis stroke="#9ca3af" tickFormatter={(value) => `${Math.round(value)}m`} tickLine={false} axisLine={false} />
                                     <Tooltip content={<TimelineTooltipContent />} cursor={{ fill: "rgba(76,29,149,0.15)" }} />
                                     <Legend wrapperStyle={{ color: "#d1d5db" }} />

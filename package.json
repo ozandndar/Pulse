@@ -12,7 +12,8 @@
     "run:electron": "wait-on tcp:5173 && cross-env NODE_ENV=development electronmon --main ./build/main/main.js",
     "build:main": "tsc -p tsconfig.json",
     "build:renderer": "npm --prefix renderer run build",
-    "build": "npm run clean && npm run build:main && npm run build:renderer",
+    "generate:icons": "node scripts/generate-icons.mjs",
+    "build": "npm run clean && npm run generate:icons && npm run build:main && npm run build:renderer",
     "dist": "npm run build && electron-builder",
     "start:prod": "npm run build && electron ./build/main/main.js",
     "start:main": "npm run build:main && electron ./build/main/main.js",
@@ -29,7 +30,9 @@
     "electron": "^38.2.1",
     "electron-builder": "^26.0.12",
     "electronmon": "^2.0.3",
+    "png-to-ico": "^2.1.8",
     "rimraf": "^6.1.0",
+    "sharp": "^0.33.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vite": "^7.1.9",
@@ -55,6 +58,7 @@
       "package.json"
     ],
     "win": {
+      "icon": "resources/icons/pulse.ico",
       "target": [
         {
           "target": "nsis",

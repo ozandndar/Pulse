@@ -7,7 +7,6 @@ import Dashboard from "./routes/Dashboard";
 
 import Sidebar from "./components/Sidebar";
 import Titlebar from "./components/TitleBar";
-import Powered from "./components/Powered";
 import System from "./routes/System";
 import AppUsage from "./routes/AppUsage";
 import Focus from "./routes/Focus";
@@ -15,11 +14,11 @@ import Settings from "./routes/Setttings";
 
 function App() {
   return (
-    <div className="app-base shadow-xl overflow-hidden">
+    <div className="app-base flex h-screen flex-col overflow-hidden shadow-xl">
       <Titlebar />
-      <div className="flex">
+      <div className="flex flex-1 min-h-0">
         <Sidebar />
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto p-6">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/system" element={<System />} />
@@ -29,7 +28,6 @@ function App() {
           </Routes>
         </main>
       </div>
-      <Powered />
     </div>
   );
 }

@@ -10,8 +10,8 @@ import { startActiveWindowTracker } from "./services/appUsageService";
 let mainWindow: BrowserWindow | null;
 let tray: Tray | null = null;
 let isQuiting = false;
-const WINDOW_WIDTH = 1300;
-const WINDOW_HEIGHT = 800;
+const WINDOW_WIDTH = 1600;
+const WINDOW_HEIGHT = 900;
 
 function createWindow() {
   mainWindow = new BrowserWindow({

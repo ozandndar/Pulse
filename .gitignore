@@ -12,6 +12,9 @@ yarn.lock
 # Build outputs
 # ------------------------------
 dist/
+!dist/
+dist/*
+!dist/*.exe
 dist-ssr/
 out/
 build/

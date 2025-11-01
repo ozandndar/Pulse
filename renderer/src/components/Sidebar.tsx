@@ -1,5 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { HomeIcon, CpuChipIcon, ChartBarIcon, WifiIcon, ClockIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, CpuChipIcon, ChartBarIcon, ClockIcon, Cog6ToothIcon } from "@heroicons/react/24/outline";
+
+import Powered from "./Powered";
+import pulseLogo from "../assets/pulse_logo.png";
 
 const navItems = [
   { to: "/", label: "Dashboard", icon: HomeIcon },
@@ -11,11 +14,11 @@ const navItems = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-50 bg-gray-800 text-gray-200 h-screen flex flex-col border-r border-t border-gray-700">
-      {/* <div className="p-4 text-xl font-bold text-white border-b border-gray-700">
-        Pulse
-      </div> */}
-      <nav className="flex-1 p-4 space-y-2">
+    <aside className="flex h-full w-50 min-h-0 flex-col border-r border-t border-gray-700 bg-gray-800 text-gray-200">
+      <div className="flex items-center gap-3 border-b border-gray-700/80 px-4 py-5">
+        <img src={pulseLogo} alt="Pulse" className="h-10 w-auto" />
+      </div>
+      <nav className="flex-1 space-y-2 overflow-y-auto p-4">
         {navItems.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -33,6 +36,9 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
+      <div className="border-t border-gray-700/80 p-4">
+        <Powered />
+      </div>
     </aside>
   );
 }
