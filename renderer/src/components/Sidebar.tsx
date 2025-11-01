@@ -11,10 +11,10 @@ const navItems = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 bg-gray-800 text-gray-200 h-screen flex flex-col">
-      <div className="p-4 text-xl font-bold text-white border-b border-gray-700">
+    <aside className="w-50 bg-gray-800 text-gray-200 h-screen flex flex-col border-r border-t border-gray-700">
+      {/* <div className="p-4 text-xl font-bold text-white border-b border-gray-700">
         Pulse
-      </div>
+      </div> */}
       <nav className="flex-1 p-4 space-y-2">
         {navItems.map(({ to, label, icon: Icon }) => (
           <NavLink
