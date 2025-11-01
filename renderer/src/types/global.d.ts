@@ -5,6 +5,13 @@ declare global {
     };
     systemAPI?: {
       getStats: () => Promise<any>
+    },
+    appUsageAPI?: {
+      getActiveWindow: () => Promise<any>,
+      listAllWindows: () => Promise<any>,
+      getSummary: (args: any) => Promise<any>,
+      getTodaySummary: () => Promise<any>,
+      getEntries: (args: any) => Promise<any>
     }
   }
 }
