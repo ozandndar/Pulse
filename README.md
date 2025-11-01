@@ -5,7 +5,7 @@ A desktop system monitoring & productivity hub built with **Electron + React (Vi
 > Status: Early scaffolding. Core window chrome & layout established. Features below are aspirational unless marked as implemented.
 
 ## ⬇️ Download
-- [Pulse Setup 1.0.0 (Windows)](https://github.com/ozandndar/Pulse/blob/main/dist/Pulse%20Setup%201.0.0.exe)
+- [Pulse Setup 1.0.0 (Windows)](https://github.com/ozandndar/Pulse/blob/main/dist/Pulse%20Setup%201.0.0.exe?raw=1)
 
 ## Screenshots
 
